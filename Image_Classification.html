@@ -13121,7 +13121,7 @@ div#notebook {
 <p>In order to get a baseline model for image recognition, we used a transfer learning technique where the model weights and architecture of ResNet50 was applied. ResNet50 was chosen for its performance as well as its size. Training on the volume of images for the duration that ResNet50 was done would not be reasonable - therefore we have used this baseline model to improve the baseline prediction. On top of this we explore different model architectures in order to define which architecture performs the best.</p>
 <p>In order to get the best performing model we needed to remember to balance model performance with edge device performance. In the case of poisonous plants the consequences of a bad prediction can be high - however the utility of an app that takes 60 min to make a prediction is impacted. Therefore at the end of this notebook we examine the relationship with building the model on a virtual machine (for training) vs inference on the edge device (time to predict vs accuracy). The overall training and model structure is defined below - the larger resources consuming actions will be conducted in the cloud enabling inference at the edge - which provides an advantage to prior work as no active network is required for inference:</p>
 <table><tr>
-    <td> <img src="ModelStructure.JPG" alt="Drawing" style="width: 750px;"/> </td>
+    <td> <img src="https://github.com/ajolson89/w251_finalproject/blob/master/ModelStructure.JPG?raw=true" alt="Drawing" style="width: 750px;"/> </td>
 </tr></table><p>This paper can be broken down into the following sections:</p>
 <ol>
 <li>Exploratory Data Analysis &amp; Understanding of the Training Dataset</li>
@@ -13156,14 +13156,14 @@ div#notebook {
 </ul>
 <p>From this data it is evident that our dataset is skewed (more edible pictures and categories than poisonous). Additionally, the dataset does not comprise all wild plants - and is only a rather small subset of wild plants. We will treat this dataset as our primary for training purposes. We do have two other datasets that can be utlized for further training on a larger array of edible plant types. The average number of images per category is 99 - however we can see in the plot below that the mean count of image per category is closer to 50 with some categories having a large number of images.</p>
 <table><tr>
-    <td> <img src="CountbyCateogry.JPG" alt="Drawing" style="width: 750px;"/> </td>
+    <td> <img src="https://github.com/ajolson89/w251_finalproject/blob/master/CountbyCateogry.JPG?raw=true" alt="Drawing" style="width: 750px;"/> </td>
 </tr></table><p>Having 50 images per class does indicate that there is hopefully some variability in terms of image orientation, quality, etc. Having this variety will have a beneficial impact on the training process. We can further improve the variety of images by utilizing image augmentation.</p>
 <p>In addition to increasing image variety, augmentation also helps to increase the training dataset size. Because we have a limited dataset (considering we will be training on Dense, CNN or ReLu layers) we can utilize augmentation and increase both the variety and total number of images in order to improve our training process. Furthermore, In the latter portion of our analysis, we attempt to make a prediction of poisonous or edible (rather than plant category). Because we have a biased training set for the binary label problem - we will increase image count of the poisonous images by utilizing image augmentation - explained in the next section.</p>
 <p>Depicted below are a few sample images taken from the datasets.</p>
 <table><tr>
-    <td> <img src="How-To-Grow-Rhubarb.jpg" alt="Drawing" style="width: 250px;"/> </td>
-    <td> <img src="Chicory20.jpg" alt="Drawing" style="width: 350px;"/> </td>
-    <td> <img src="asparagus8.jpg" alt="Drawing" style="width: 350px;"/> </td>
+    <td> <img src="https://github.com/ajolson89/w251_finalproject/blob/master/How-To-Grow-Rhubarb.jpg?raw=true" alt="Drawing" style="width: 250px;"/> </td>
+    <td> <img src="https://github.com/ajolson89/w251_finalproject/blob/master/Chicory20.jpg?raw=true" alt="Drawing" style="width: 350px;"/> </td>
+    <td> <img src="https://github.com/ajolson89/w251_finalproject/blob/master/asparagus8.jpg?raw=true" alt="Drawing" style="width: 350px;"/> </td>
 </tr></table>
 </div>
 </div>
@@ -13730,7 +13730,7 @@ For example, if you specify 0.3, then the range will be [0.7, 1.3], or between 7
 <p>The ResNet50 dataset was trained on the ImageNet dataset which is a large volume dataset with classes associated with common everyday items (broccoli, horse, etc). Reviewing the categories the model has already been trained on, it currently doesn't have any that match the classes in our training dataset - however it has been trained on many plant and food related items.</p>
 <p>ResNet is a model built upon the Residual layer structure. It has been noted in literature where deeper networks tend to have lower accuracy compared to it's shallower counterpart. This is essentially because it can be hard for a dense layer to learn the y = x relationship when the training has become saturated. A Residual Layer has an implementation similar to  y = F(x) + x where the function F(x) can reduce to 0 and bypass the degradation problem.</p>
 <table><tr>
-    <td> <img src="ResidualLayer.JPG" alt="Drawing" style="width: 500px;"/> </td>
+    <td> <img src="https://github.com/ajolson89/w251_finalproject/blob/master/ResidualLayer.JPG?raw=true" alt="Drawing" style="width: 500px;"/> </td>
 </tr></table><p>Picture above is one layer of a residual layer which shows how the input can bypass the learned weights and become the output. This type of layer has shown high accuracy in image classification problems. He, K., Zhang, X., Ren, S., &amp; Sun, J. (2015). Deep Residual Leraning for Image Recognition. Cornell University.</p>
 <p>In addition to a well trained model we also needed to control the size and the inference time of the model. The intent of this paper is to train in a data center (where volume of data and computing power can be large) in order to bring the model to an edge device for inference. We therefore need to ensure the model is sufficiently small (such that the memory requirements won't exhaust the hardware of an edge device), fit on a limited storage device, and provide image inference at a reasonable time. Because of this constraint we chose to use ResNet50 as our baselayer vs ResNet 100, 1000 for example.</p>
 
@@ -15243,7 +15243,7 @@ Label batch shape:  (32, 70)
 </ul>
 <p>Depicted below is the performance of these different training episodes:</p>
 <table><tr>
-    <td> <img src="Binary_Accuracy.JPG" alt="Drawing" style="width: 500px;"/> </td>
+    <td> <img src="https://github.com/ajolson89/w251_finalproject/blob/master/Binary_Accuracy.JPG?raw=true" alt="Drawing" style="width: 500px;"/> </td>
 </tr></table><p>In the legend, equal infers the training set is balanced, tanh refers to a different activation function (default was relu), trainentiremodel refers to un-freezing the base ResNet50 model for training. As can be seen, while certain model architecture changes did impact performance in the earlier training epochs - the best performing model by far was the model that trained all layers (including ResNet50) as well as having additional dense layers above. Presumably this showcases the improved accuracy that the residual layers have in terms of the image classification/detection problem over and above a series of dense layers.</p>
 <p>Surprisingly training the entire model did not have a large effect on training time. For 100 epochs training on only the dense layers we averaged 24sec per epoch training on a P100 GPU with a batch size of 64. When expanding and training on the entire model our average epoch time was 32sec.</p>
 <p>In terms of other model performance - there wasn't very much of a performance boost by equalizing the dataset. The blue and green lines show approximately similar performance across the training epochs. This is likely due to the image augmentation that's already taking place during training in order to increase our total image size to 15,000. Increasing the depth of the model didn't show significant model performance improvement. This may be due to a small change in overall model architecture - moving from a layer configuration of [128,64,32,16] to [512,256,128,64,32,16]. This also may be due to the aforementioned degradation problem with deeper networks.</p>
@@ -15255,14 +15255,14 @@ Label batch shape:  (32, 70)
 <li>Residual layers (2): this is the model architecture for ResNet50 - we wanted to determine if a similar architecture would help improve model performance</li>
 </ul>
 <table><tr>
-    <td> <img src="Binary_Accuracy_ModelLayer.JPG" alt="Drawing" style="width: 350px;"/> </td>
-    <td> <img src="Binary_Precision_ModelLayer.JPG" alt="Drawing" style="width: 350px;"/> </td>
-    <td> <img src="Binary_Recall_ModelLayer.JPG" alt="Drawing" style="width: 350px;"/> </td>
+    <td> <img src="https://github.com/ajolson89/w251_finalproject/blob/master/Binary_Accuracy_ModelLayer.JPG?raw=true" alt="Drawing" style="width: 350px;"/> </td>
+    <td> <img src="https://github.com/ajolson89/w251_finalproject/blob/master/Binary_Precision_ModelLayer.JPG?raw=true" alt="Drawing" style="width: 350px;"/> </td>
+    <td> <img src="https://github.com/ajolson89/w251_finalproject/blob/master/Binary_Recall_ModelLayer.JPG?raw=true" alt="Drawing" style="width: 350px;"/> </td>
 </tr></table><p>As previously mentioned, accuracy isn't the only metric in which we need to track for the binary detection problem. While a accuracy of 100% would be phenomenal, it isn't likely. However we also need to be cognizant that a model that can predict 100% of the time correctly when there is a poisonous plant is very important. This is because the consequences of predicting a plant is poisonous when it isn't (false positive) is much less severe than predicting a plant is edible when it's poisonous (false negative). We therefore also track recall, precision and F1 scores. Of these scores recall is likely the most important since it tracks true positives vs the number of poisonous plants in the dataset.</p>
 <p>The graphs above depict accuracy, precision and recall in that order. In general all three match each other. From the plots we can see that CNN was the best performing model. The model that trained the entire ResNet50 along with two additional Residual layers may have outperformed - however the training time was significantly longer for this model.</p>
 <p>During validation testing we noted that overall performance was lower for many models compared to training accuracy ~50-85% compared to &gt;90% on all models for training. This may be a consequence of over-fitting the model. We therefore attempted to train with a higher dropout (0.7 vs 0.3). As can be seen in the plots above this caused the model to fail to improve - perhaps because there was too much dropout. Further iterations would include refining the choice of dropout hyperparameter. Below is depicted a confusion matrix based on the final binary model:</p>
 <table><tr>
-    <td> <img src="ConfusionMatrix.JPG" alt="Drawing" style="width: 500px;"/> </td>
+    <td> <img src="https://github.com/ajolson89/w251_finalproject/blob/master/ConfusionMatrix.JPG?raw=true" alt="Drawing" style="width: 500px;"/> </td>
 </tr></table><p>We can see that overall performance on the validation dataset is fairly good (accuracy 97.5% and recall 100%). The biggest benefit is the recall is 100% - so in no case did the model predict an edible plant when it was in fact poisonous.</p>
 <p>While training it was noted that the best performing model in terms of training and validation accuracy &amp; recall was using the model that enabled training for all layers and included an additional CNN + pooling layer, coupled with 4 additional dense layers. Future work may iterate over different nuanced design choices to develop the best performing model with the smallest footprint. This would not only hopefully help improve accuracy and recall - but also improve inference time and resources on the edge device.</p>
 <p>While this model architecutre is fairly large - we will use TensorRT in order to reduce the model size and improve inference. This is detailed in the sections below.</p>
@@ -15275,7 +15275,7 @@ Label batch shape:  (32, 70)
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Section-7:-Inference-on-TX2-(Edge-Device)"><strong>Section 7: Inference on TX2 (Edge Device)</strong><a class="anchor-link" href="#Section-7:-Inference-on-TX2-(Edge-Device)">&#182;</a></h2><p>Initially we wanted to see whether inference is possible on an edge device. We utilized a TX2 - which is more powerful than a typical edge device (smartphone / etc). When loading the model and attempting to make inference we found that most models wouldn't even load to memory. The larger model (detailed above with CNN and dense layers) frequently gave OOM errors indicating this model (without the benefit of TensorRT isn't applicable for edge devices). When the models would load we would frequently see nearly 100% memory utilization as depicted below:</p>
 <table><tr>
-    <td> <img src="Memory_Inference2.png" alt="Drawing" style="width: 500px;"/> </td>
+    <td> <img src="https://github.com/ajolson89/w251_finalproject/blob/master/Memory_Inference2.png?raw=true" alt="Drawing" style="width: 500px;"/> </td>
 </tr></table><p>It is therefore important that we utilize TensorRT in order to improve model performance on lower powered edge devices.</p>
 
 </div>
@@ -15290,7 +15290,7 @@ Label batch shape:  (32, 70)
 <h3 id="Convert-Keras-model-to-TensorFlow-PB-file">Convert Keras model to TensorFlow PB file<a class="anchor-link" href="#Convert-Keras-model-to-TensorFlow-PB-file">&#182;</a></h3><p>As first step, We will need to convert Keras model(.h5) to tensorflow pb file. at same time freeze the graph so that TensorRT can use that. The graph is a plan to excute the computation which covers variables and connections.</p>
 <p>Then we will be able to save the freeze model into PB file so that model can be loaded in TX2. The overall structure is detailed in the image below:</p>
 <table><tr>
-    <td> <img src="tensorrt.JPG" alt="Drawing" style="width: 750px;"/> </td>
+    <td> <img src="https://github.com/ajolson89/w251_finalproject/blob/master/tensorrt.JPG?raw=true" alt="Drawing" style="width: 750px;"/> </td>
 </tr></table>
 </div>
 </div>
